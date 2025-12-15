@@ -1,9 +1,3 @@
-// ============================================
-// MODERN PORTFOLIO JAVASCRIPT
-// Enhanced interactivity and animations
-// ============================================
-
-// Header scroll effect
 document.addEventListener('DOMContentLoaded', function() {
   const header = document.querySelector('header');
   
@@ -17,39 +11,33 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // Contact form handling
   const contactForm = document.getElementById('contactForm');
   
   if (contactForm) {
     contactForm.addEventListener('submit', function(e) {
       e.preventDefault();
       
-      // Get form values
       const formData = new FormData(contactForm);
       const name = contactForm.querySelector('input[type="text"]').value;
       const email = contactForm.querySelector('input[type="email"]').value;
       const message = contactForm.querySelector('textarea').value;
       
-      // Simple validation
       if (!name || !email || !message) {
         showNotification('Veuillez remplir tous les champs', 'error');
         return;
       }
       
-      // Email validation
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(email)) {
         showNotification('Veuillez entrer une adresse email valide', 'error');
         return;
       }
       
-      // Simulate form submission
       const submitButton = contactForm.querySelector('button[type="submit"]');
       const originalText = submitButton.textContent;
       submitButton.textContent = 'Envoi en cours...';
       submitButton.disabled = true;
       
-      // Simulate API call
       setTimeout(() => {
         showNotification('Merci ! Votre demande a été envoyée avec succès. Je vous répondrai bientôt.', 'success');
         contactForm.reset();
@@ -59,23 +47,19 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // Gallery item click handler (for future lightbox implementation)
   const galleryItems = document.querySelectorAll('.gallery-item');
   
   galleryItems.forEach(item => {
     item.addEventListener('click', function() {
-      // Add click animation
       this.style.transform = 'scale(0.95)';
       setTimeout(() => {
         this.style.transform = '';
       }, 200);
       
-      // Future: Implement lightbox here
       console.log('Gallery item clicked');
     });
   });
 
-  // Smooth scroll for anchor links
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
       const href = this.getAttribute('href');
@@ -92,7 +76,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // Intersection Observer for fade-in animations
   const observerOptions = {
     threshold: 0.1,
     rootMargin: '0px 0px -50px 0px'
@@ -107,7 +90,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }, observerOptions);
 
-  // Observe gallery items
   galleryItems.forEach(item => {
     item.style.opacity = '0';
     item.style.transform = 'translateY(30px)';
@@ -115,7 +97,6 @@ document.addEventListener('DOMContentLoaded', function() {
     observer.observe(item);
   });
 
-  // Animated counter for stats
   const statNumbers = document.querySelectorAll('.stat-number[data-target]');
   const statsSection = document.querySelector('.stats');
   
@@ -134,7 +115,6 @@ document.addEventListener('DOMContentLoaded', function() {
     statsObserver.observe(statsSection);
   }
 
-  // Animate skill bars when in view
   const skillBars = document.querySelectorAll('.skill-progress');
   const skillsSection = document.querySelector('.skills');
   
@@ -157,7 +137,6 @@ document.addEventListener('DOMContentLoaded', function() {
     skillsObserver.observe(skillsSection);
   }
 
-  // Observe service cards for fade-in animation
   const serviceCards = document.querySelectorAll('.service-card');
   serviceCards.forEach((card, index) => {
     card.style.opacity = '0';
@@ -166,20 +145,16 @@ document.addEventListener('DOMContentLoaded', function() {
     observer.observe(card);
   });
 
-  // Portfolio Filter Functionality
   const filterButtons = document.querySelectorAll('.filter-btn');
   
   if (filterButtons.length > 0) {
     filterButtons.forEach(button => {
       button.addEventListener('click', function() {
-        // Remove active class from all buttons
         filterButtons.forEach(btn => btn.classList.remove('active'));
-        // Add active class to clicked button
         this.classList.add('active');
         
         const filterValue = this.getAttribute('data-filter');
         
-        // Filter gallery items
         galleryItems.forEach(item => {
           const category = item.getAttribute('data-category');
           
@@ -203,7 +178,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // Lightbox Functionality
   const lightbox = document.getElementById('lightbox');
   const lightboxImage = document.getElementById('lightbox-image');
   const lightboxTitle = document.getElementById('lightbox-title');
@@ -215,9 +189,7 @@ document.addEventListener('DOMContentLoaded', function() {
   let currentImageIndex = 0;
   let images = [];
   
-  // Initialize lightbox with gallery items
   if (galleryItems.length > 0 && lightbox) {
-    // Collect all visible images
     function updateImagesArray() {
       images = Array.from(galleryItems)
         .filter(item => !item.classList.contains('hidden'))
@@ -234,7 +206,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     updateImagesArray();
     
-    // Open lightbox
     function openLightbox(index) {
       if (images.length === 0) return;
       currentImageIndex = index;
@@ -243,7 +214,6 @@ document.addEventListener('DOMContentLoaded', function() {
       document.body.style.overflow = 'hidden';
     }
     
-    // Update lightbox content
     function updateLightboxContent() {
       if (images[currentImageIndex]) {
         lightboxImage.src = images[currentImageIndex].src;
@@ -252,25 +222,21 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
     
-    // Close lightbox
     function closeLightbox() {
       lightbox.classList.remove('active');
       document.body.style.overflow = '';
     }
     
-    // Navigate to next image
     function nextImage() {
       currentImageIndex = (currentImageIndex + 1) % images.length;
       updateLightboxContent();
     }
     
-    // Navigate to previous image
     function prevImage() {
       currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
       updateLightboxContent();
     }
     
-    // Add click handlers to gallery items
     galleryItems.forEach((item, index) => {
       const viewBtn = item.querySelector('.gallery-view-btn');
       if (viewBtn) {
@@ -286,7 +252,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
       }
       
-      // Also allow clicking the image itself
       item.addEventListener('click', function() {
         updateImagesArray();
         const visibleIndex = Array.from(galleryItems)
@@ -298,7 +263,6 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
     
-    // Lightbox controls
     if (lightboxClose) {
       lightboxClose.addEventListener('click', closeLightbox);
     }
@@ -311,14 +275,12 @@ document.addEventListener('DOMContentLoaded', function() {
       lightboxPrev.addEventListener('click', prevImage);
     }
     
-    // Close on background click
     lightbox.addEventListener('click', function(e) {
       if (e.target === lightbox) {
         closeLightbox();
       }
     });
     
-    // Keyboard navigation
     document.addEventListener('keydown', function(e) {
       if (lightbox.classList.contains('active')) {
         if (e.key === 'Escape') {
@@ -331,7 +293,6 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
     
-    // Update images array when filters change
     if (filterButtons.length > 0) {
       filterButtons.forEach(button => {
         button.addEventListener('click', updateImagesArray);
@@ -340,20 +301,16 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-// Notification system
 function showNotification(message, type = 'success') {
-  // Remove existing notification if any
   const existingNotification = document.querySelector('.notification');
   if (existingNotification) {
     existingNotification.remove();
   }
 
-  // Create notification element
   const notification = document.createElement('div');
   notification.className = `notification notification-${type}`;
   notification.textContent = message;
   
-  // Add styles
   notification.style.cssText = `
     position: fixed;
     top: 20px;
@@ -369,7 +326,6 @@ function showNotification(message, type = 'success') {
     font-weight: 500;
   `;
   
-  // Add animation keyframes if not already added
   if (!document.querySelector('#notification-styles')) {
     const style = document.createElement('style');
     style.id = 'notification-styles';
@@ -400,7 +356,6 @@ function showNotification(message, type = 'success') {
   
   document.body.appendChild(notification);
   
-  // Auto remove after 5 seconds
   setTimeout(() => {
     notification.style.animation = 'slideOutRight 0.3s ease-out';
     setTimeout(() => {
@@ -408,7 +363,6 @@ function showNotification(message, type = 'success') {
     }, 300);
   }, 5000);
   
-  // Click to dismiss
   notification.addEventListener('click', () => {
     notification.style.animation = 'slideOutRight 0.3s ease-out';
     setTimeout(() => {
@@ -417,11 +371,10 @@ function showNotification(message, type = 'success') {
   });
 }
 
-// Animated counter function
 function animateCounter(element) {
   const target = parseInt(element.getAttribute('data-target'));
-  const duration = 2000; // 2 seconds
-  const increment = target / (duration / 16); // 60fps
+  const duration = 2000;
+  const increment = target / (duration / 16);
   let current = 0;
   
   const updateCounter = () => {
@@ -437,7 +390,6 @@ function animateCounter(element) {
   updateCounter();
 }
 
-// Add loading animation
 window.addEventListener('load', function() {
   document.body.style.opacity = '0';
   setTimeout(() => {
